@@ -2,11 +2,11 @@
   "name": "bored-alive",
   "version": "1.0.0",
   "description": "Chat in rooms where the objective is to avoid being boring.",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Alexander Steele",
   "license": "ISC",
   "dependencies": {
     "ejs": "^2.6.2",

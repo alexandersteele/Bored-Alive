@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Bored Alive Chat</title>
+        <link rel="stylesheet" type="text/css" href="css/style.css" />
+        <script src="../../socket.io/socket.io.js"></script>
+        <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+    </head>
+    <body>
+        <ul id="messages"></ul>
+        <form action="/" method="POST" id="chatForm">
+            <input id="txt" autocomplete="off" autofocus="on" placeholder="type your message here..." /><button>Send</button>
+        </form>
+
+        <script>
+            var socket = io.connect('http://localhost:8080');
+
+            // Submit Chat message without reload/refresh the page
+            $('form').submit(function(e){
+                e.preventDefault(); // prevents page reloading
+
+                socket.emit('chat_message', $('#txt').val());
+
+                $('#txt').val('');
+                return false;
+            });
+
+            // Add chat message to feed
+            socket.on('chat_message', function(msg){
+                $('#messages').append($('<li>').html(msg));
+            });
+
+            // Add user joined chat to feed 
+            socket.on('is_online', function(username) {
+                $('#messages').append($('<li>').html(username));
+            });
+
+            // Ask username when joining
+            var username = prompt('Please tell me your name');
+            socket.emit('username', username);
+
+        </script>
+    </body>
+</html>
